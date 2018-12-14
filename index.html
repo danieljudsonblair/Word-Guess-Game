@@ -66,13 +66,13 @@
         // Randomly Choose a Prez and store as a variable
         var randPres = game.plist[Math.floor(Math.random() * game.plist.length)];
 
-        // Set up users letter guess
+
 
 
         // set up an array the same length as randPres to hold correct letters guessed thus far
         let guessedPresHolder = [];
         for (let a = 0; a < randPres.length; a++) {
-            guessedPresHolder.push("#");
+            guessedPresHolder.push("_");
         }
         // automatically fill in spaces between names
         for (let b = 0; b < randPres.length; b++) {
@@ -81,10 +81,14 @@
             }
         }
 
-
+        // set up an array to hold the final display with correct Capitalization
+        var finalArray = [];
+        for (let e = 0; e < randPres.length; e++) {
+            finalArray.push(" ");
+        }
         // set up an array of missed letters and a var to indicate a missed guess
         let missedGuessArr = [];
-
+        // set up the final display array with correct capitalization
 
         document.onkeyup = function (event) {
             // set up and re-initialize match variable each time key is pressed
@@ -106,14 +110,18 @@
                 missedGuessArr.push(userGuess);
             }
             // capitalize first letter of Names
-            let test = guessedPresHolder[0].toUpperCase();
-                
-            
+            for (let d = 0; d < guessedPresHolder.length; d++) {
+                if (d === 0 || (d > 0 && guessedPresHolder[d-1] === " ")) {
+                    finalArray[d] = guessedPresHolder[d].toUpperCase()
+                } else {finalArray[d] = guessedPresHolder[d]}
+            }
+
+
             console.log(randPres);
             console.log(guessedPresHolder);
             console.log(match);
             console.log(missedGuessArr);
-            console.log(test);
+            console.log(finalArray);
 
 
         };
