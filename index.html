@@ -87,7 +87,7 @@
             finalArray.push(" ");
         }
         // set up an array of missed letters and a var to indicate a missed guess
-        let missedGuessArr = [];
+        var missedGuessArr = [];
         // set up the final display array with correct capitalization
 
         document.onkeyup = function (event) {
@@ -106,19 +106,28 @@
                 }
             }
             // if no match, populate missedGuess Array with missed letter
-            if (match === false) {
+
+            if (match === false && missedGuessArr.length === 0) {
                 missedGuessArr.push(userGuess);
             }
+
+            if (match === false && missedGuessArr.length > 0 && missedGuessArr.includes(userGuess) === false) {
+                missedGuessArr.push(userGuess);
+            }
+
+
+
+
             // capitalize first letter of Names
             for (let d = 0; d < guessedPresHolder.length; d++) {
-                if (d === 0 || (d > 0 && guessedPresHolder[d-1] === " ")) {
+                if (d === 0 || (d > 0 && guessedPresHolder[d - 1] === " ")) {
                     finalArray[d] = guessedPresHolder[d].toUpperCase()
-                } else {finalArray[d] = guessedPresHolder[d]}
+                } else { finalArray[d] = guessedPresHolder[d] }
             }
 
 
             console.log(randPres);
-            console.log(guessedPresHolder);
+            // console.log(guessedPresHolder);
             console.log(match);
             console.log(missedGuessArr);
             console.log(finalArray);
