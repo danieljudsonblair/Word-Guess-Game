@@ -4,12 +4,122 @@
 <head>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
         crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
     <meta charset="UTF-8">
     <title>
+        Guess That President!!
     </title>
 </head>
 
 <body>
+    <script type="text/javascript">
+        var game = {
+            plist: ["George Washington",
+                "John Adams",
+                "Thomas Jefferson",
+                "James Madison",
+                "James Monroe",
+                "John Quincy Adams",
+                "Andrew Jackson",
+                "Martin Van Buren",
+                "William Henry Harrison",
+                "John Tyler",
+                "James K Polk",
+                "Zachary Taylor",
+                "Millard Fillmore",
+                "Franklin Pierce",
+                "James Buchanan",
+                "Abraham Lincoln",
+                "Andrew Johnson",
+                "Ulysses S Grant",
+                "Rutherford B Hayes",
+                "James Garfield",
+                "Chester A Arthur",
+                "Grover Cleveland",
+                "Benjamin Harrison",
+                "Grover Cleveland",
+                "William McKinley",
+                "Theodore Roosevelt",
+                "William H Taft",
+                "Woodrow Wilson",
+                "Warren G Harding",
+                "Calvin Coolidge",
+                "Herbert Hoover",
+                "Franklin D Roosevelt",
+                "Harry S Truman",
+                "Dwight Eisenhower",
+                "John F Kennedy",
+                "Lyndon Johnson",
+                "Richard Nixon",
+                "Gerald Ford",
+                "Jimmy Carter",
+                "Ronald Reagan",
+                "George Bush",
+                "Bill Clinton",
+                "George W Bush",
+                "Barack Obama",
+                "Donald Trump"]
+
+
+
+        }
+        // Randomly Choose a Prez and store as a variable
+        var randPres = game.plist[Math.floor(Math.random() * game.plist.length)];
+
+        // Set up users letter guess
+
+
+        // set up an array the same length as randPres to hold correct letters guessed thus far
+        let guessedPresHolder = [];
+        for (let a = 0; a < randPres.length; a++) {
+            guessedPresHolder.push("#");
+        }
+        // automatically fill in spaces between names
+        for (let b = 0; b < randPres.length; b++) {
+            if (randPres[b] === " ") {
+                guessedPresHolder[b] = " ";
+            }
+        }
+
+
+        // set up an array of missed letters and a var to indicate a missed guess
+        let missedGuessArr = [];
+
+
+        document.onkeyup = function (event) {
+            // set up and re-initialize match variable each time key is pressed
+            let match = false;
+            // Determines which key was pressed.
+            var userGuess = event.key;
+
+
+            // determine if Presidents name contains users letter guess
+
+            for (let c = 0; c < randPres.length; c++) {
+                if (userGuess === randPres.toLowerCase()[c]) {
+                    guessedPresHolder[c] = userGuess;
+                    match = true;
+                }
+            }
+            // if no match, populate missedGuess Array with missed letter
+            if (match === false) {
+                missedGuessArr.push(userGuess);
+            }
+            // capitalize first letter of Names
+            let test = guessedPresHolder[0].toUpperCase();
+                
+            
+            console.log(randPres);
+            console.log(guessedPresHolder);
+            console.log(match);
+            console.log(missedGuessArr);
+            console.log(test);
+
+
+        };
+
+    </script>
+
 
 </body>
 
