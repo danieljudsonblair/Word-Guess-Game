@@ -1,0 +1,21 @@
+* {
+    box-sizing: border-box;
+}
+
+header {
+    text-align: center;
+    font-size: 60px;
+    border-bottom: solid 10px;
+    
+    
+}
+
+body {
+    /* background-image: url(../images/flag.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    top: 100%; */
+}
+.pos {
+    padding-top: 50px;
+}
