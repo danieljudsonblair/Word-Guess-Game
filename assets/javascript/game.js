@@ -27,34 +27,32 @@ var game = {
         "Grover Cleveland",
         "William McKinley",
         "Theodore Roosevelt",
-        "William H Taft",
+        "William Howard Taft",
         "Woodrow Wilson",
         "Warren G Harding",
         "Calvin Coolidge",
         "Herbert Hoover",
-        "Franklin D Roosevelt",
+        "Franklin Delano Roosevelt",
         "Harry S Truman",
         "Dwight Eisenhower",
         "John F Kennedy",
-        "Lyndon Johnson",
-        "Richard Nixon",
+        "Lyndon B Johnson",
+        "Richard N Nixon",
         "Gerald Ford",
         "Jimmy Carter",
         "Ronald Reagan",
-        "George Bush",
-        "Bill Clinton",
+        "George H W Bush",
+        "William Jefferson Clinton",
         "George W Bush",
         "Barack Obama",
-        "Donald Trump"],
+        "Donald J Trump"],
 
 }
 
-// setup variable for a winning game 
-var win = false;
+
+
 // Randomly Choose a Prez and store as a variable
 randPres = game.plist[Math.floor(Math.random() * game.plist.length)];
-
-
 
 
 // set up an array the same length as randPres to hold correct letters guessed thus far
@@ -78,15 +76,15 @@ for (let e = 0; e < randPres.length; e++) {
 var missedGuessArr = [];
 // set up the final display array with correct capitalization
 
+
+// set up and re-initialize match variable each time key is pressed
+// Randomly Choose a Prez and store as a variable
 document.onkeyup = function (event) {
-    // set up and re-initialize match variable each time key is pressed
-    let match = false;
-    // Determines which key was pressed.
     var userGuess = event.key;
 
 
     // determine if Presidents name contains users letter guess
-
+    var match = false;
     for (let c = 0; c < randPres.length; c++) {
         if (userGuess === randPres.toLowerCase()[c]) {
             guessedPresHolder[c] = userGuess;
@@ -106,17 +104,47 @@ document.onkeyup = function (event) {
             finalArray[d] = guessedPresHolder[d].toUpperCase()
         } else { finalArray[d] = guessedPresHolder[d] }
     }
-// indicate a win with a for loop
+    // indicate a win with a for loop
+    var randPresArr = randPres.split("");
+
+    // setup variable for a winning game 
+    var winCtr = randPresArr.length;
+
+    for (var i = 0; i < randPresArr.length; ++i) {
+        if (randPresArr[i] === finalArray[i]) {
+            winCtr = winCtr - 1;
+        }
+
+    }
+    // set up win/loss variables
+    var lost = false;
+    var won = false;
+    // play as long as we have not won or lost
+    ///  won game condition
 
 
-if (randPres.split("") == finalArray) {
-    win = true;
-}
+    if (winCtr === 0) {
+        won = true;
+    }
+
+    // lost game condition
+
+
+    if (missedGuessArr.length > 3) {
+        lost = true;
+    }
+    /// once game is lost or won, start over
 
 
 
-console.log(randPres);
-console.log(randPres.split(""));
-console.log(finalArray);
-console.log(win);
+    console.log(randPres);
+    console.log(randPresArr);
+    console.log(finalArray);
+    console.log(missedGuessArr);
+    // console.log(winCtr);
+    console.log(won);
+    console.log(lost);
+
+
+
 };
