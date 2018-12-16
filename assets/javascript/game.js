@@ -54,7 +54,7 @@ var game = {
 // Randomly Choose a Prez and store as a variable
 var randPres = game.plist[Math.floor(Math.random() * game.plist.length)];
 
-
+document.getElementById("begin").innerHTML = "Press spacebar to begin!";
 // set up an array the same length as randPres to hold correct letters guessed thus far
 var guessedPresHolder = [];
 for (let a = 0; a < randPres.length; a++) {
@@ -83,7 +83,7 @@ var missedGuessArr = [];
 document.onkeyup = function (event) {
     var userGuess = event.key;
 
-     document.getElementById("begin").innerHTML = "Press spacebar to begin!"
+
     // determine if Presidents name contains users letter guess
     var match = false;
     for (let c = 0; c < randPres.length; c++) {
@@ -133,7 +133,11 @@ document.onkeyup = function (event) {
 
     if (winCtr === 0) {
         won = true;
-        WinLoseMsg = "You Won!! :)"
+        if (game.plist.indexOf(randPres) !== 21 && game.plist.indexOf(randPres) !== 23) {
+        WinLoseMsg = "You Won!! :) " + " " + randPres + " is President #" + (game.plist.indexOf(randPres) + 1);
+        } else { 
+        WinLoseMsg = "You Won!! :) " + " " + randPres + " is President #22 and 24";
+        }
         document.getElementById("msg").innerHTML = WinLoseMsg;
         document.getElementById("pa").innerHTML = playAgainMsg;
     }
@@ -184,6 +188,9 @@ document.onkeyup = function (event) {
 
         // setup variable for a winning game 
         winCtr = randPresArr.length;
+
+
+        document.getElementById("begin").innerHTML = "Press spacebar to begin!";
 
 
 
