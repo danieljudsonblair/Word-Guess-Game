@@ -1,22 +1,40 @@
 * {
     box-sizing: border-box;
 }
-
+ {
+    
+}
 header {
     text-align: center;
     font-size: 60px;
     border-bottom: solid 10px;
+    border-bottom-color: blue;
+    width: 100%;
+    top: 0; right: 0; left 0;
     
     
 }
 
+h1 {
+    letter-spacing: 4px; 
+    word-spacing: 8px;
+}
 body {
     background-color: black;
     color: white;
+    background-image: url(../images/flag.jpg);
+    background-repeat: no-repeat;
+    background-position: 90% 70%;
+    background-attachment: fixed;
+    
 }
 .pos {
     padding-top: 50px;
+    height: 300px;
 }
 .redtext {
     color: red;
+}
+.score {
+    color: green;
 }

@@ -20,7 +20,7 @@ var game = {
         "Andrew Johnson",
         "Ulysses S Grant",
         "Rutherford B Hayes",
-        "James Garfield",
+        "James A Garfield",
         "Chester A Arthur",
         "Grover Cleveland",
         "Benjamin Harrison",
@@ -37,8 +37,8 @@ var game = {
         "Dwight D Eisenhower",
         "John F Kennedy",
         "Lyndon B Johnson",
-        "Richard N Nixon",
-        "Gerald Ford",
+        "Richard M Nixon",
+        "Gerald R Ford",
         "Jimmy Carter",
         "Ronald Reagan",
         "George H W Bush",
@@ -53,8 +53,8 @@ var game = {
 
 // Randomly Choose a Prez and store as a variable
 var randPres = game.plist[Math.floor(Math.random() * game.plist.length)];
-
-document.getElementById("begin").innerHTML = "Press spacebar to begin!";
+// display beginning message
+document.getElementById("begin").innerHTML = "Press any key to begin!";
 // set up an array the same length as randPres to hold correct letters guessed thus far
 var guessedPresHolder = [];
 for (let a = 0; a < randPres.length; a++) {
@@ -66,18 +66,26 @@ for (let b = 0; b < randPres.length; b++) {
         guessedPresHolder[b] = " ";
     }
 }
-
+// create function to automatially indicate spaces outside of keyup function
+var createSpaces = function () {
+    for (let c = 0; c < randPres.length; c++) {
+        if (randPres[c] === " ") {
+            guessedPresHolder[c] = " ";
+        }
+    }
+    document.getElementById('fArr').innerHTML = guessedPresHolder.join("");
+}
 // set up an array to hold the final display with correct Capitalization
 var finalArray = [];
 for (let e = 0; e < randPres.length; e++) {
     finalArray.push("_");
 }
 
-// set up an array of missed letters and a var to indicate a missed guess
+// set up an array of missed letter choices
 var missedGuessArr = [];
-// set up the final display array with correct capitalization
 
-
+createSpaces();
+var wins = 0;
 // set up and re-initialize match variable each time key is pressed
 // Randomly Choose a Prez and store as a variable
 document.onkeyup = function (event) {
@@ -96,7 +104,7 @@ document.onkeyup = function (event) {
 
     // Populate missed letters array
 
-    if (match === false && missedGuessArr.includes(userGuess) === false) {
+    if (match === false && missedGuessArr.includes(userGuess) === false && userGuess !== "Enter") {
         missedGuessArr.push(userGuess);
         document.getElementById("begin").innerHTML = "";
     }
@@ -128,22 +136,23 @@ document.onkeyup = function (event) {
     var playAgainMsg = "Press Enter to Play Again!";
     var WinLoseMsg = "";
     // play as long as we have not won or lost
-    ///  won game condition
 
+    ///  won game condition
 
     if (winCtr === 0) {
         won = true;
+
+        // display winning messages
         if (game.plist.indexOf(randPres) !== 21 && game.plist.indexOf(randPres) !== 23) {
-        WinLoseMsg = "You Won!! :) " + " " + randPres + " is President #" + (game.plist.indexOf(randPres) + 1);
-        } else { 
-        WinLoseMsg = "You Won!! :) " + " " + randPres + " is President #22 and 24";
+            WinLoseMsg = "You Won!! :) " + " " + randPres + " is President #" + (game.plist.indexOf(randPres) + 1);
+        } else {
+            WinLoseMsg = "You Won!! :) " + " " + randPres + " is President #22 and #24";
         }
         document.getElementById("msg").innerHTML = WinLoseMsg;
         document.getElementById("pa").innerHTML = playAgainMsg;
     }
 
-    // lost game condition
-
+    // lost game condition and messages
 
     if (missedGuessArr.length > 4) {
         lost = true;
@@ -155,20 +164,32 @@ document.onkeyup = function (event) {
     if (missedGuessArr.length > 5) {
         missedGuessArr.pop();
     }
+    var remGuesses = 5 - missedGuessArr.length;
+    document.getElementById("rem").innerHTML = "Guesses Remaining: " + remGuesses;
 
     // play until we have won or lost, then reinitialize game
-    
+
     if ((won === true || lost === true) && userGuess === "Enter") {
         randPres = game.plist[Math.floor(Math.random() * game.plist.length)];
+        remGuesses = 5;
+        if (won === true) {
+            wins++;
+        }
 
-
+        won = false;
+        lost = false;
         document.getElementById("msg").innerHTML = "";
         document.getElementById("pa").innerHTML = "";
 
-
+        // re-initialize variables
         guessedPresHolder = [];
         for (let a = 0; a < randPres.length; a++) {
             guessedPresHolder.push("_");
+        }
+        for (let c = 0; c < randPres.length; c++) {
+            if (randPres[c] === " ") {
+                guessedPresHolder[c] = " ";
+            }
         }
 
         for (let b = 0; b < randPres.length; b++) {
@@ -176,41 +197,25 @@ document.onkeyup = function (event) {
                 guessedPresHolder[b] = " ";
             }
         }
-
-
         finalArray = [];
-        for (let e = 0; e < randPres.length; e++) {
-            finalArray.push("_");
+        for (let e = 0; e < guessedPresHolder.length; e++) {
+            finalArray[e] = guessedPresHolder[e]
         }
 
         missedGuessArr = [];
+
         randPresArr = randPres.split("");
 
         // setup variable for a winning game 
         winCtr = randPresArr.length;
 
 
-        document.getElementById("begin").innerHTML = "Press spacebar to begin!";
-
-
-
-
-
-
+        document.getElementById("begin").innerHTML = "Press any key to begin!";
 
     }
 
-    console.log(randPres);
-    console.log(randPresArr);
-    console.log(finalArray);
-    console.log(guessedPresHolder);
-    console.log(missedGuessArr);
-    console.log(winCtr);
-    console.log(won);
-    console.log(lost);
-
-    document.getElementById('fArr').innerHTML = finalArray
-    document.getElementById('mgArr').innerHTML = missedGuessArr
-
+    document.getElementById("fArr").innerHTML = finalArray.join("");
+    document.getElementById('mgArr').innerHTML = missedGuessArr.join(" ");
+    document.getElementById("w").innerHTML = "Your score: " + wins;
 
 };
