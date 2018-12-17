@@ -55,12 +55,13 @@ var game = {
 var randPres = game.plist[Math.floor(Math.random() * game.plist.length)];
 // display beginning message
 document.getElementById("begin").innerHTML = "Press any key to begin!";
+
 // set up an array the same length as randPres to hold correct letters guessed thus far
 var guessedPresHolder = [];
 for (let a = 0; a < randPres.length; a++) {
     guessedPresHolder.push("_");
 }
-// automatically fill in spaces between names
+// automatically fill in spaces between names in guessedPresHolder Array
 for (let b = 0; b < randPres.length; b++) {
     if (randPres[b] === " ") {
         guessedPresHolder[b] = " ";
@@ -83,7 +84,9 @@ for (let e = 0; e < randPres.length; e++) {
 
 // set up an array of missed letter choices
 var missedGuessArr = [];
-
+// set up win/loss variables
+var lost = false;
+var won = false;
 createSpaces();
 var wins = 0;
 // set up and re-initialize match variable each time key is pressed
@@ -98,17 +101,17 @@ document.onkeyup = function (event) {
         if (userGuess === randPres.toLowerCase()[c]) {
             guessedPresHolder[c] = userGuess;
             match = true;
-            document.getElementById("begin").innerHTML = "";
+            // document.getElementById("begin").innerHTML = " ";
         }
     }
 
-    // Populate missed letters array
-
-    if (match === false && missedGuessArr.includes(userGuess) === false && userGuess !== "Enter") {
-        missedGuessArr.push(userGuess);
-        document.getElementById("begin").innerHTML = "";
+    // Populate missed letters array until we have won
+    if (won === false) {
+        if (match === false && missedGuessArr.includes(userGuess) === false && userGuess !== "Enter") {
+            missedGuessArr.push(userGuess);
+            // document.getElementById("begin").innerHTML = " ";
+        }
     }
-
     // capitalize first letter of Names
     for (let d = 0; d < guessedPresHolder.length; d++) {
         if (d === 0 || (d > 0 && guessedPresHolder[d - 1] === " ")) {
@@ -129,12 +132,10 @@ document.onkeyup = function (event) {
     }
 
 
-    // set up win/loss variables
-    var lost = false;
-    var won = false;
+
     // set up play again message
     var playAgainMsg = "Press Enter to Play Again!";
-    var WinLoseMsg = "";
+    var WinLoseMsg = " ";
     // play as long as we have not won or lost
 
     ///  won game condition
@@ -146,6 +147,7 @@ document.onkeyup = function (event) {
         if (game.plist.indexOf(randPres) !== 21 && game.plist.indexOf(randPres) !== 23) {
             WinLoseMsg = "You Won!! :) " + " " + randPres + " is President #" + (game.plist.indexOf(randPres) + 1);
         } else {
+            // Special case for Grover Cleveland
             WinLoseMsg = "You Won!! :) " + " " + randPres + " is President #22 and #24";
         }
         document.getElementById("msg").innerHTML = WinLoseMsg;
@@ -165,21 +167,21 @@ document.onkeyup = function (event) {
         missedGuessArr.pop();
     }
     var remGuesses = 5 - missedGuessArr.length;
-    document.getElementById("rem").innerHTML = "Guesses Remaining: " + remGuesses;
+    document.getElementById("begin").innerHTML = "Guesses Remaining: " + remGuesses;
 
     // play until we have won or lost, then reinitialize game
 
     if ((won === true || lost === true) && userGuess === "Enter") {
         randPres = game.plist[Math.floor(Math.random() * game.plist.length)];
         remGuesses = 5;
-        if (won === true) {
+        if (won === true && lost === false) {
             wins++;
         }
 
         won = false;
         lost = false;
-        document.getElementById("msg").innerHTML = "";
-        document.getElementById("pa").innerHTML = "";
+        document.getElementById("msg").innerHTML = " ";
+        document.getElementById("pa").innerHTML = " ";
 
         // re-initialize variables
         guessedPresHolder = [];
@@ -210,7 +212,7 @@ document.onkeyup = function (event) {
         winCtr = randPresArr.length;
 
 
-        document.getElementById("begin").innerHTML = "Press any key to begin!";
+        document.getElementById("begin").innerHTML = "Guesses Remaining: " + remGuesses;
 
     }
 
