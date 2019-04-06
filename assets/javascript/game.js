@@ -53,6 +53,7 @@ var game = {
 
 // Randomly Choose a Prez and store as a variable
 var randPres = game.plist[Math.floor(Math.random() * game.plist.length)];
+
 // display beginning message
 document.getElementById("begin").innerHTML = "Press any key to begin!";
 
@@ -61,12 +62,14 @@ var guessedPresHolder = [];
 for (let a = 0; a < randPres.length; a++) {
     guessedPresHolder.push("_");
 }
+
 // automatically fill in spaces between names in guessedPresHolder Array
 for (let b = 0; b < randPres.length; b++) {
     if (randPres[b] === " ") {
         guessedPresHolder[b] = " ";
     }
 }
+
 // create function to automatially indicate spaces outside of keyup function
 var createSpaces = function () {
     for (let c = 0; c < randPres.length; c++) {
@@ -76,6 +79,7 @@ var createSpaces = function () {
     }
     document.getElementById('fArr').innerHTML = guessedPresHolder.join("");
 }
+
 // set up an array to hold the final display with correct Capitalization
 var finalArray = [];
 for (let e = 0; e < randPres.length; e++) {
@@ -84,11 +88,13 @@ for (let e = 0; e < randPres.length; e++) {
 
 // set up an array of missed letter choices
 var missedGuessArr = [];
+
 // set up win/loss variables
 var lost = false;
 var won = false;
 createSpaces();
 var wins = 0;
+
 // set up and re-initialize match variable each time key is pressed
 // Randomly Choose a Prez and store as a variable
 document.onkeyup = function (event) {
@@ -101,7 +107,6 @@ document.onkeyup = function (event) {
         if (userGuess === randPres.toLowerCase()[c]) {
             guessedPresHolder[c] = userGuess;
             match = true;
-            // document.getElementById("begin").innerHTML = " ";
         }
     }
 
@@ -109,7 +114,6 @@ document.onkeyup = function (event) {
     if (won === false) {
         if (match === false && missedGuessArr.includes(userGuess) === false && userGuess !== "Enter") {
             missedGuessArr.push(userGuess);
-            // document.getElementById("begin").innerHTML = " ";
         }
     }
     // capitalize first letter of Names
@@ -118,6 +122,7 @@ document.onkeyup = function (event) {
             finalArray[d] = guessedPresHolder[d].toUpperCase()
         } else { finalArray[d] = guessedPresHolder[d] }
     }
+
     // indicate a win with a for loop
     var randPresArr = randPres.split("");
 
@@ -131,11 +136,10 @@ document.onkeyup = function (event) {
 
     }
 
-
-
     // set up play again message
     var playAgainMsg = "Press Enter to Play Again!";
     var WinLoseMsg = " ";
+    
     // play as long as we have not won or lost
 
     ///  won game condition
